@@ -2,9 +2,14 @@
 #include<stdlib.h>
 #include"k.h"
 
-// compile with gcc -m64 csv.c c.o
-// obtain c.o from http://kx.com/q/l64/c.o for linux
-// obtain k.h form http://kx.com/q/c/c/k.h
+// obtain k.h from http://kx.com/q/c/c/k.h
+// linux:
+//  compile with gcc -m64 csv.c c.o
+//  obtain c.o from http://kx.com/q/l64/c.o for linux
+// windows:
+//  start the x86 or 64 bit version of build environment, then: cl /MD csv.c c.obj ws2_32.lib
+//  obtain c.obj from http://kx.com/q/w32/ or w64/
+
 
 int main(int argc,char*argv[])
 {
