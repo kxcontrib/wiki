@@ -4,10 +4,10 @@
 
 // obtain k.h from http://kx.com/q/c/c/k.h
 // linux:
-//  compile with gcc -m64 csv.c c.o
+//  compile with gcc -m64 -DKXVER=3 csv.c c.o
 //  obtain c.o from http://kx.com/q/l64/c.o for linux
 // windows:
-//  start the x86 or 64 bit version of build environment, then: cl /MD csv.c c.obj ws2_32.lib
+//  start the x86 or 64 bit version of build environment, then: cl -DKXVER=3 /MD csv.c c.obj ws2_32.lib
 //  obtain c.obj from http://kx.com/q/w32/ or w64/
 
 
@@ -15,7 +15,8 @@ int main(int argc,char*argv[])
 {
     K flip,result,columnNames,columnData;
     int row,col,nCols,nRows,handle=khpu("localhost",12001,"myusername:mypassword");
-    if(handle<0)exit(1);
+    if(handle<0)printf("Cannot connect\n"),exit(1);
+    else if(!handle)printf("Wrong credentials\n"),exit(1);
     result=k(handle,"([]a:til 10;b:reverse til 10;c:10?`4)",(K)0);
     if(!result)
         printf("Network Error\n"),perror("Network"),exit(1);
@@ -55,7 +56,7 @@ int main(int argc,char*argv[])
                 case(8):{printf("%f",kE(obj)[row]);}break;
                 case(9):{printf("%f",kF(obj)[row]);}break;
                 case(11):{printf("%s",kS(obj)[row]);}break;
-                default:{printf("unknown type");}break;
+                default:{printf("type %d not supported by this client",obj->t);}break;
             }
         }
         printf("\n");
