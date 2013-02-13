@@ -17,7 +17,7 @@ int main(int argc,char*argv[])
     int row,col,nCols,nRows,handle=khpu("localhost",12001,"myusername:mypassword");
     if(handle<0)printf("Cannot connect\n"),exit(1);
     else if(!handle)printf("Wrong credentials\n"),exit(1);
-    result=k(handle,"([]a:til 10;b:reverse til 10;c:10?`4)",(K)0);
+    result=k(handle,"([]a:til 10;b:reverse til 10;c:10?`4;d:{x#.Q.a}each til 10)",(K)0);
     if(!result)
         printf("Network Error\n"),perror("Network"),exit(1);
     if(result->t==-128)
@@ -48,6 +48,11 @@ int main(int argc,char*argv[])
             if(col>0)printf(",");
             switch(obj->t)
             {
+                case(0):{ // handle a list of char vectors
+                  K x=kK(obj)[row];
+                  if(10==x->t){int i;for(i=0;i<xn;i++)printf("%c",kG(x)[i]);}
+                  else printf("type %d not supported by this client",obj->t);
+                }break;
                 case(1):{printf("%d",kG(obj)[row]);}break;
                 case(4):{printf("%d",kG(obj)[row]);}break;
                 case(5):{printf("%d",kH(obj)[row]);}break;
