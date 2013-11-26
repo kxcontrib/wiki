@@ -20,9 +20,9 @@ int main(int argc,char*argv[])
     result=k(handle,"([]a:til 10;b:reverse til 10;c:10?`4;d:{x#.Q.a}each til 10)",(K)0);
     if(!result)
         printf("Network Error\n"),perror("Network"),exit(1);
-    if(result->t==-128)
-        printf("Server Error %s\n",result->s),kclose(handle),exit(1);
     kclose(handle);
+    if(result->t==-128)
+        printf("Server Error %s\n",result->s),r0(result),exit(1);
     if(result->t!=99&&result->t!=98) // accept table or dict
         printf("type %d\n",result->t),r0(result),exit(1);
     flip=ktd(result); // if keyed table, unkey it. ktd decrements ref count of arg.
