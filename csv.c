@@ -80,7 +80,7 @@ int main(int argc,char*argv[]){
         case(KP):{
           J j=kJ(obj)[row];
           if(nj!=j){ // checks if value is not 0Nj
-            time_t time=j/8.64e13+10957*8.64e4;
+            time_t time=j*1e-9+10957*8.64e4;
             struct tm*timinfo=lgmtime(&time);
             printf("%04d.%02d.%02dD%02d:%02d:%02d.%09lld",
                    timinfo->tm_year+1900,
@@ -127,10 +127,10 @@ int main(int argc,char*argv[]){
           J j=kJ(obj)[row];
           if(ni!=j){
             time_t time=j/1000000000;
-            struct tm*timinfo=localtime(&time);
+            struct tm*timinfo=lgmtime(&time);
             printf("%dD%02d:%02d:%02d.%09lld",
                    timinfo->tm_yday,
-                   timinfo->tm_hour-1,
+                   timinfo->tm_hour,
                    timinfo->tm_min,
                    timinfo->tm_sec,
                    j%1000000000);
@@ -140,25 +140,25 @@ int main(int argc,char*argv[]){
           I i=kI(obj)[row];
           if(ni!=i){ 
             time_t time=i*60;
-            struct tm*timinfo=localtime(&time);
-            printf("%02d:%02d",timinfo->tm_hour-1,timinfo->tm_min);
+            struct tm*timinfo=lgmtime(&time);
+            printf("%02d:%02d",timinfo->tm_hour,timinfo->tm_min);
           }
         }break;
         case(KV):{
           I i=kI(obj)[row];
           if(ni!=i){
             time_t time=kI(obj)[row];
-            struct tm*timinfo=localtime(&time);
-            printf("%02d:%02d:%02d",timinfo->tm_hour-1,timinfo->tm_min,timinfo->tm_sec);
+            struct tm*timinfo=lgmtime(&time);
+            printf("%02d:%02d:%02d",timinfo->tm_hour,timinfo->tm_min,timinfo->tm_sec);
           }
         }break;
         case(KT):{
           I i=kI(obj)[row];
           if(ni!=i){
             time_t time=i/1000;
-            struct tm*timinfo=localtime(&time);
+            struct tm*timinfo=lgmtime(&time);
             printf("%02d:%02d:%02d.%03d",
-                   timinfo->tm_hour-1,
+                   timinfo->tm_hour,
                    timinfo->tm_min,
                    timinfo->tm_sec,
                    i%1000);
